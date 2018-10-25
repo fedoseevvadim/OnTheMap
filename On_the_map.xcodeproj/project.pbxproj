@@ -8,13 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		DD82C00F217DB4F800E35466 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD82C00E217DB4F800E35466 /* AppDelegate.swift */; };
-		DD82C011217DB4F800E35466 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD82C010217DB4F800E35466 /* FirstViewController.swift */; };
+		DD82C011217DB4F800E35466 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD82C010217DB4F800E35466 /* LoginViewController.swift */; };
 		DD82C013217DB4F800E35466 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD82C012217DB4F800E35466 /* SecondViewController.swift */; };
 		DD82C016217DB4F800E35466 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD82C014217DB4F800E35466 /* Main.storyboard */; };
 		DD82C018217DB4FA00E35466 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD82C017217DB4FA00E35466 /* Assets.xcassets */; };
 		DD82C01B217DB4FA00E35466 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD82C019217DB4FA00E35466 /* LaunchScreen.storyboard */; };
 		DD82C026217DB4FA00E35466 /* On_the_mapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD82C025217DB4FA00E35466 /* On_the_mapTests.swift */; };
 		DD82C031217DB4FA00E35466 /* On_the_mapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD82C030217DB4FA00E35466 /* On_the_mapUITests.swift */; };
+		DD82C040217DC2F600E35466 /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD82C03F217DC2F600E35466 /* GCDBlackBox.swift */; };
+		DDE2301F2180EC9500DCC142 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE2301E2180EC9500DCC142 /* AppModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +39,7 @@
 /* Begin PBXFileReference section */
 		DD82C00B217DB4F800E35466 /* On_the_map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = On_the_map.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD82C00E217DB4F800E35466 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		DD82C010217DB4F800E35466 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
+		DD82C010217DB4F800E35466 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DD82C012217DB4F800E35466 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		DD82C015217DB4F800E35466 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DD82C017217DB4FA00E35466 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,6 +51,8 @@
 		DD82C02C217DB4FA00E35466 /* On_the_mapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = On_the_mapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD82C030217DB4FA00E35466 /* On_the_mapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = On_the_mapUITests.swift; sourceTree = "<group>"; };
 		DD82C032217DB4FA00E35466 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DD82C03F217DC2F600E35466 /* GCDBlackBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
+		DDE2301E2180EC9500DCC142 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +83,9 @@
 		DD82C002217DB4F700E35466 = {
 			isa = PBXGroup;
 			children = (
+				DDE2301D2180EC6700DCC142 /* SupportingFiles */,
+				DDE2301C2180EC4C00DCC142 /* ViewControllers */,
+				DD82C03E217DC29900E35466 /* OnTheMapManager */,
 				DD82C00D217DB4F800E35466 /* On_the_map */,
 				DD82C024217DB4FA00E35466 /* On_the_mapTests */,
 				DD82C02F217DB4FA00E35466 /* On_the_mapUITests */,
@@ -99,9 +106,6 @@
 		DD82C00D217DB4F800E35466 /* On_the_map */ = {
 			isa = PBXGroup;
 			children = (
-				DD82C00E217DB4F800E35466 /* AppDelegate.swift */,
-				DD82C010217DB4F800E35466 /* FirstViewController.swift */,
-				DD82C012217DB4F800E35466 /* SecondViewController.swift */,
 				DD82C014217DB4F800E35466 /* Main.storyboard */,
 				DD82C017217DB4FA00E35466 /* Assets.xcassets */,
 				DD82C019217DB4FA00E35466 /* LaunchScreen.storyboard */,
@@ -126,6 +130,32 @@
 				DD82C032217DB4FA00E35466 /* Info.plist */,
 			);
 			path = On_the_mapUITests;
+			sourceTree = "<group>";
+		};
+		DD82C03E217DC29900E35466 /* OnTheMapManager */ = {
+			isa = PBXGroup;
+			children = (
+				DD82C00E217DB4F800E35466 /* AppDelegate.swift */,
+				DD82C03F217DC2F600E35466 /* GCDBlackBox.swift */,
+			);
+			path = OnTheMapManager;
+			sourceTree = "<group>";
+		};
+		DDE2301C2180EC4C00DCC142 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				DD82C010217DB4F800E35466 /* LoginViewController.swift */,
+				DD82C012217DB4F800E35466 /* SecondViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		DDE2301D2180EC6700DCC142 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				DDE2301E2180EC9500DCC142 /* AppModel.swift */,
+			);
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,9 +289,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD82C040217DC2F600E35466 /* GCDBlackBox.swift in Sources */,
 				DD82C013217DB4F800E35466 /* SecondViewController.swift in Sources */,
+				DDE2301F2180EC9500DCC142 /* AppModel.swift in Sources */,
 				DD82C00F217DB4F800E35466 /* AppDelegate.swift in Sources */,
-				DD82C011217DB4F800E35466 /* FirstViewController.swift in Sources */,
+				DD82C011217DB4F800E35466 /* LoginViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,7 +474,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "HOME.On-the-map";
+				PRODUCT_BUNDLE_IDENTIFIER = HOME.OnTheMap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -459,7 +491,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "HOME.On-the-map";
+				PRODUCT_BUNDLE_IDENTIFIER = HOME.OnTheMap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
