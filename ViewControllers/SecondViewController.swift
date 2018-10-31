@@ -12,9 +12,17 @@ class SecondViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        navigationItem.title = AppModel.appName
+
     }
-
-
+    
+    @IBAction func refreshAction(_ sender: Any) {
+        print ("refreshAction")
+    }
+    
+    @IBAction func logoutAction(_ sender: Any) {
+        print ("Logout")
+    }
 }
 

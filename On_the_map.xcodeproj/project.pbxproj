@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DD0363952188796500D7EE51 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD0363942188796500D7EE51 /* FirstViewController.swift */; };
+		DD313203218871630027AF23 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD313202218871630027AF23 /* DetailViewController.swift */; };
+		DD3CD6B72181CF5500F5C055 /* Udacity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3CD6B62181CF5500F5C055 /* Udacity.swift */; };
 		DD82C00F217DB4F800E35466 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD82C00E217DB4F800E35466 /* AppDelegate.swift */; };
 		DD82C011217DB4F800E35466 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD82C010217DB4F800E35466 /* LoginViewController.swift */; };
 		DD82C013217DB4F800E35466 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD82C012217DB4F800E35466 /* SecondViewController.swift */; };
@@ -37,6 +40,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DD0363942188796500D7EE51 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
+		DD313202218871630027AF23 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		DD3CD6B62181CF5500F5C055 /* Udacity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Udacity.swift; sourceTree = "<group>"; };
 		DD82C00B217DB4F800E35466 /* On_the_map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = On_the_map.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD82C00E217DB4F800E35466 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DD82C010217DB4F800E35466 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -146,6 +152,8 @@
 			children = (
 				DD82C010217DB4F800E35466 /* LoginViewController.swift */,
 				DD82C012217DB4F800E35466 /* SecondViewController.swift */,
+				DD313202218871630027AF23 /* DetailViewController.swift */,
+				DD0363942188796500D7EE51 /* FirstViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -154,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				DDE2301E2180EC9500DCC142 /* AppModel.swift */,
+				DD3CD6B62181CF5500F5C055 /* Udacity.swift */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -292,8 +301,11 @@
 				DD82C040217DC2F600E35466 /* GCDBlackBox.swift in Sources */,
 				DD82C013217DB4F800E35466 /* SecondViewController.swift in Sources */,
 				DDE2301F2180EC9500DCC142 /* AppModel.swift in Sources */,
+				DD0363952188796500D7EE51 /* FirstViewController.swift in Sources */,
 				DD82C00F217DB4F800E35466 /* AppDelegate.swift in Sources */,
 				DD82C011217DB4F800E35466 /* LoginViewController.swift in Sources */,
+				DD3CD6B72181CF5500F5C055 /* Udacity.swift in Sources */,
+				DD313203218871630027AF23 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,17 +14,25 @@ struct AppModel {
     static let udacitySignupURL = "https://auth.udacity.com/sign-up?next=https%3A%2F%2Fclassroom.udacity.com%2Fauthenticated"
     static let appName          = "On The Map"
     static let titleAction      = "Ok"
-
-    static let udacityApiPath   = "https://www.udacity.com/api/session"
-    static let udacityUsername  = "username"
-    static let udacityPassword  = "password"
-    static let udacity          = "udacity"
+    static let loginStatus      = "Login Request: status code is wrong"
+    static let noData           = "Login Request: returned no data"
+    static let errorWithLogin   = "Error with the Login request"
+    
+    struct udacity {
+        
+        static let apiPath   = "https://www.udacity.com/api/session"
+        static let username  = "username"
+        static let password  = "password"
+        static let udacity   = "udacity"
+        
+    }
     
     struct alert {
 
         static let alertTitle               = "Discard"
         static let alertMessageEnterEmail   = "Please enter your email."
         static let alertMessageEnterPass    = "Please enter your password."
+        static let alertErrorLogin          = "Error from Udacity"
         
     }
     
@@ -55,33 +63,4 @@ func showActivityIndicatory(show: Bool, parent:UIView) {
     }
     
 }
-
-class UdacityClient {
-    
-    func login (email: String, password: String, completion: @escaping (_ error: NSError? ) -> Void ) {
-        
-        let request             = NSMutableURLRequest(url: URL(string: AppModel.udacityApiPath)!)
-        let fieldsDictionary    = NSMutableDictionary()
-        let udacityDictionary   = NSMutableDictionary()
-        
-        request.httpMethod  = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        fieldsDictionary.setValue(email, forKey: AppModel.udacityUsername)
-        fieldsDictionary.setValue(password, forKey: AppModel.udacityPassword)
-        
-        udacityDictionary.setValue(fieldsDictionary, forKey: AppModel.udacity)
-
-    }
-    
-    func logOut () {
-        
-        
-    }
-
-}
-
-
-
 

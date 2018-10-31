@@ -55,6 +55,30 @@ class LoginViewController: UIViewController {
         
         showActivityIndicatory(show: true, parent: self.view)
         
+        UdacityClient.sharedInstance().login(email: email, password: password) { (result, error) in
+            
+            guard error == nil else {
+                self.showError(message: error ?? AppModel.alert.alertErrorLogin)
+                return
+            }
+            
+            //
+            
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "logInto", sender: self)
+            }
+   
+        }
+        
+    }
+    
+    func showError(message: String) {
+        
+        DispatchQueue.main.async {
+            showActivityIndicatory(show: false, parent: self.view)
+            showAlert(message: message, parent: self)
+            self.loginButton.isEnabled = true
+        }
         
     }
     
