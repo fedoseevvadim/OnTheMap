@@ -17,6 +17,11 @@ struct AppModel {
     static let loginStatus      = "Login Request: status code is wrong"
     static let noData           = "Login Request: returned no data"
     static let errorWithLogin   = "Error with the Login request"
+    static let errorWithLogOut                  = "Error with logout request"
+    static let errorWithLogOutRequest           = "Logout request status code is bad"
+    static let errorWithGetStudentsData         = "Error with getting students data"
+    static let errorUnknownErrorWithStudentLoc  = "Unknown error while fetching student locations"
+ 
     
     struct udacity {
         
@@ -37,6 +42,55 @@ struct AppModel {
     }
     
 }
+
+// example of JSON data
+// ["latitude": 37.386052, "createdAt": 2018-10-31T13:55:31.328Z, "longitude": -122.083851, "firstName": John, "mediaURL": https://udacity.com, "updatedAt": 2018-10-31T13:55:31.328Z, "mapString": Mountain View, CA, "lastName": Doe, "objectId": 8HKXdPJ5Ia, "uniqueKey": 1234]
+
+struct StudentInformation {
+    static var students: [studentStruct]?
+    static var loggedInStudent: studentStruct?
+}
+
+struct studentStruct {
+    
+    var firstName:  String = ""
+    var lastName:   String = ""
+    var latitude:   String = ""
+    var longitude:  String = ""
+    var mediaURL:   String = ""
+    var createdAt:  String = ""
+    var updatedAt:  String = ""
+    var mapString:  String = ""
+    var objectId:   String = ""
+    var uniqueKey:  String = ""
+    
+    init?(data: [String:AnyObject])  {
+        
+        guard data["firstName"] != nil else {
+            return nil
+        }
+        
+        guard data["lastName"] != nil else {
+            return nil
+        }
+        
+        self.init(data)
+    }
+    
+    init(_ data: [String:AnyObject]) {
+        
+        if let firstName = data["firstName"] {
+            self.firstName = firstName as! String
+        }
+        
+        if let lastName = data["lastName"] {
+            self.lastName = lastName as! String
+        }
+    }
+
+    
+}
+
 
 func showAlert (message: String, parent: UIViewController) {
     

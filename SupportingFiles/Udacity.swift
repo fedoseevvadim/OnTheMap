@@ -18,7 +18,50 @@ class UdacityClient {
         return Singleton.sharedInstance
     }
     
-    func logOut (completion: @escaping (_ error: String?) -> Void) {
+    func getStudentsLocation (completion: @escaping (_ error: String?) ->Void) {
+        
+        var request = URLRequest(url: URL(string: "https://parse.udacity.com/parse/classes/StudentLocation")!)
+        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+        let session = URLSession.shared
+        let task = session.dataTask(with: request) { data, response, error in
+            guard (error == nil) else {
+                completion("Get students server error: \(error!.localizedDescription)")
+                return
+            }
+            
+            guard let data = data else {
+                completion(AppModel.errorUnknownErrorWithStudentLoc)
+                return
+            }
+            
+            do {
+                let dict = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: AnyObject]
+                if let studentsDict = dict["results"] as? [[String:AnyObject]] {
+                    
+                    StudentInformation.students = [studentStruct]()
+                    
+                    for student in studentsDict {
+                        if let studentStruct = studentStruct (data: student) {
+                            StudentInformation.students?.append(studentStruct)
+                        }
+  
+                    }
+                    
+                    DispatchQueue.main.async {
+                        completion(nil)
+                    }
+                }
+            } catch {
+                completion(AppModel.errorWithGetStudentsData)
+            }
+            
+        }
+        task.resume()
+        
+    }
+    
+    func logOut (completion: @escaping (_ result: Data?, _ error: String?) -> Void) {
         
         var request = URLRequest(url: URL(string: AppModel.udacity.apiPath)!)
         request.httpMethod = "DELETE"
@@ -32,15 +75,27 @@ class UdacityClient {
         }
         let session = URLSession.shared
         let task = session.dataTask(with: request) { data, response, error in
-            if error != nil { // Handle error…
+            
+            guard error == nil else {
+                completion(nil, AppModel.errorWithLogOut + ": \(error?.localizedDescription ?? "")")
                 return
             }
-            let range = Range(5..<data!.count)
-            let newData = data?.subdata(in: range) /* subset response data! */
-            print(String(data: newData!, encoding: .utf8)!)
+            
+            guard let status = (response as? HTTPURLResponse)?.statusCode,
+                status >= 200 && status <= 299 else {
+                    completion(nil, AppModel.errorWithLogOutRequest)
+                    return
+            }
+            
+            guard let data = data else {
+                completion(nil, "Logout request returned no data")
+                return
+            }
+            
+            completion(data, nil)
         }
-        task.resume()
         
+        task.resume()
         
     }
     
