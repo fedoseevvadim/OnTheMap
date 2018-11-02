@@ -8,21 +8,21 @@
 
 import Foundation
 import UIKit
+import CoreLocation
 
 struct AppModel {
     
-    static let udacitySignupURL = "https://auth.udacity.com/sign-up?next=https%3A%2F%2Fclassroom.udacity.com%2Fauthenticated"
-    static let appName          = "On The Map"
-    static let titleAction      = "Ok"
-    static let loginStatus      = "Login Request: status code is wrong"
-    static let noData           = "Login Request: returned no data"
-    static let errorWithLogin   = "Error with the Login request"
+    static let udacitySignupURL                 = "https://auth.udacity.com/sign-up?next=https%3A%2F%2Fclassroom.udacity.com%2Fauthenticated"
+    static let appName                          = "On The Map"
+    static let titleAction                      = "Ok"
+    static let loginStatus                      = "Login Request: status code is wrong"
+    static let noData                           = "Login Request: returned no data"
+    static let errorWithLogin                   = "Error with the Login request"
     static let errorWithLogOut                  = "Error with logout request"
     static let errorWithLogOutRequest           = "Logout request status code is bad"
     static let errorWithGetStudentsData         = "Error with getting students data"
     static let errorUnknownErrorWithStudentLoc  = "Unknown error while fetching student locations"
  
-    
     struct udacity {
         
         static let apiPath   = "https://www.udacity.com/api/session"
@@ -56,7 +56,8 @@ struct studentStruct {
     var firstName:  String = ""
     var lastName:   String = ""
     var latitude:   String = ""
-    var longitude:  String = ""
+    var coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+    //var longitude:  String = ""
     var mediaURL:   String = ""
     var createdAt:  String = ""
     var updatedAt:  String = ""
@@ -74,6 +75,13 @@ struct studentStruct {
             return nil
         }
         
+        guard data["latitude"] != nil else {
+            return nil
+        }
+        guard data["longitude"] != nil else {
+            return nil
+        }
+        
         self.init(data)
     }
     
@@ -86,6 +94,12 @@ struct studentStruct {
         if let lastName = data["lastName"] {
             self.lastName = lastName as! String
         }
+        
+        if let latitude  = data["latitude"], let longitude = data["longitude"]
+        {
+            self.coordinate = CLLocationCoordinate2D(latitude: latitude as! CLLocationDegrees, longitude: longitude as! CLLocationDegrees)
+        }
+        
     }
 
     
