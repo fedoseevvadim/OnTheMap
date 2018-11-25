@@ -12,8 +12,10 @@ import MapKit
 
 class MapViewController: UIViewController, MKMapViewDelegate {
     
-    
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var addButton: UIBarButtonItem!
+    @IBOutlet weak var refreshButton: UIBarButtonItem!
+    @IBOutlet weak var logoutButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         
@@ -22,6 +24,24 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         mapView.delegate = self
         navigationItem.title = AppModel.appName
         
+    }
+    
+    
+    @IBAction func refreshAction(_ sender: Any) {
+        
+        Utils.shared().showActivityIndicator(show: true, parent: self.view)
+        enableButtons(false)
+        UdacityClient.sharedInstance().getStudentsLocation() { (error) in
+            
+            guard error == nil else {
+                showAlert(message: "Error", parent: self)
+                return
+            }
+            self.addPin()
+            Utils.shared().showActivityIndicator(show: false, parent: self.view)
+            self.enableButtons(true)
+            
+        }
     }
     
     @IBAction func logoutAction(_ sender: Any) {
@@ -39,18 +59,46 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     // MARK - mapView functions
     
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(true)
+        
+        Utils.shared().showActivityIndicator(show: true, parent: self.view)
+        //self.enableButtons(false)
+        
+    }
+    
+    func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool) {
+        
+        Utils.shared().showActivityIndicator(show: false, parent: self.view)
+        self.enableButtons(true)
+        
+    }
+
+//    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+//
+//        //Utils.shared().showActivityIndicator(show: false, parent: self.vie)
+//        //self.enableButtons(true)
+//
+//    }
+    
     func mapViewWillStartRenderingMap(_ mapView: MKMapView) {
         
+        Utils.shared().showActivityIndicator(show: true, parent: self.view)
+        self.enableButtons(false)
+        
         UdacityClient.sharedInstance().getStudentsLocation() { ( error ) in
-            
+
             guard error == nil else {
                 showAlert(message: "Error", parent: self)
                 return
             }
-            
+
             self.addPin()
+            //Utils.shared().showActivityIndicator(show: false, parent: self.view)
+            //self.enableButtons(true)
         }
-        
+
     }
     
     func addPin () {
@@ -74,9 +122,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
     }
     
-    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-        
-    }
     
     // Here we create a view with a "right callout accessory view". You might choose to look into other
     // decoration alternatives. Notice the similarity between this method and the cellForRowAtIndexPath
@@ -114,6 +159,15 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
     }
 
-    
+    func enableButtons (_ enable: Bool) {
+        
+        //mapView.alpha = CGFloat(0.2)
+        mapView.isOpaque = enable
+        addButton.isEnabled = enable
+        refreshButton.isEnabled = enable
+        logoutButton.isEnabled = enable
+        
+    }
+
     
 }

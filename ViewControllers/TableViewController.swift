@@ -24,6 +24,12 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         navigationItem.title = AppModel.appName
 
+        self.loadData()
+        
+    }
+    
+    func loadData () {
+        
         UdacityClient.sharedInstance().getStudentsLocation() { ( error ) in
             
             guard error == nil else {
@@ -36,8 +42,10 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         
     }
     
+    //MARK: Button actions
+    
     @IBAction func refreshAction(_ sender: Any) {
-        print ("refreshAction")
+        self.loadData()
     }
     
     @IBAction func logoutAction(_ sender: Any) {
@@ -54,6 +62,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         
     }
     
+    //MARK: TableView functions
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         guard let students = StudentInformation.students else {

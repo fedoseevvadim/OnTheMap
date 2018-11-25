@@ -13,6 +13,13 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var signUpButton: UIButton!
+    
+    @IBAction func signUpPressed(_ sender: Any) {
+        if let url = URL(string: AppModel.udacitySignUp) {
+            UIApplication.shared.open(url, options: [:])
+        }
+    }
     
     override func viewDidLoad() {
         
@@ -52,9 +59,7 @@ class LoginViewController: UIViewController {
                 return
         }
      
-        
-        showActivityIndicatory(show: true, parent: self.view)
-        
+    
         UdacityClient.sharedInstance().login(email: email, password: password) { (result, error) in
             
             guard error == nil else {
@@ -62,7 +67,7 @@ class LoginViewController: UIViewController {
                 return
             }
             
-            //
+            Utils.shared().showActivityIndicator(show: true, parent: self.view)
             
             DispatchQueue.main.async {
                 self.performSegue(withIdentifier: "logInto", sender: self)
@@ -75,7 +80,7 @@ class LoginViewController: UIViewController {
     func showError(message: String) {
         
         DispatchQueue.main.async {
-            showActivityIndicatory(show: false, parent: self.view)
+            Utils.shared().showActivityIndicator(show: false, parent: self.view)
             showAlert(message: message, parent: self)
             self.loginButton.isEnabled = true
         }

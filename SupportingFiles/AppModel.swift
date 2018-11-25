@@ -13,6 +13,10 @@ import CoreLocation
 struct AppModel {
     
     static let udacitySignupURL                 = "https://auth.udacity.com/sign-up?next=https%3A%2F%2Fclassroom.udacity.com%2Fauthenticated"
+    static let udacityStudentLocation           = "https://parse.udacity.com/parse/classes/StudentLocation"
+    static let udacityAppID                     = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
+    static let udacityAPIKey                    = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
+    static let udacitySignUp                    = "https://www.udacity.com/account/auth#!/signup"
     static let appName                          = "On The Map"
     static let titleAction                      = "Ok"
     static let loginStatus                      = "Login Request: status code is wrong"
@@ -22,7 +26,9 @@ struct AppModel {
     static let errorWithLogOutRequest           = "Logout request status code is bad"
     static let errorWithGetStudentsData         = "Error with getting students data"
     static let errorUnknownErrorWithStudentLoc  = "Unknown error while fetching student locations"
- 
+    static let EnterValidURL                    = "Please enter valid website url"
+    static let EnterLocation                    = "Please enter location text."
+    
     struct udacity {
         
         static let apiPath   = "https://www.udacity.com/api/session"
@@ -78,7 +84,12 @@ struct studentStruct {
         guard data["latitude"] != nil else {
             return nil
         }
+        
         guard data["longitude"] != nil else {
+            return nil
+        }
+        
+        guard data["mediaURL"] != nil else {
             return nil
         }
         
@@ -95,6 +106,10 @@ struct studentStruct {
             self.lastName = lastName as! String
         }
         
+        if let mediaURL = data["mediaURL"] {
+            self.mediaURL = mediaURL as! String
+        }
+        
         if let latitude  = data["latitude"], let longitude = data["longitude"]
         {
             self.coordinate = CLLocationCoordinate2D(latitude: latitude as! CLLocationDegrees, longitude: longitude as! CLLocationDegrees)
@@ -106,6 +121,36 @@ struct studentStruct {
 }
 
 
+class Utils {
+    
+    let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .gray)
+    
+    class func shared() -> Utils {
+        struct Singleton {
+            static var sharedInstance = Utils()
+        }
+        return Singleton.sharedInstance
+    }
+    
+    func showActivityIndicator(show: Bool, parent:UIView) {
+        
+        let activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
+        
+        activityIndicatorView.alpha     = 1
+        activityIndicatorView.center    = CGPoint(x: parent.frame.width/2, y: parent.frame.height/2)
+        
+        if show {
+            activityIndicatorView.startAnimating()
+            parent.addSubview(activityIndicatorView)
+        } else {
+            activityIndicatorView.stopAnimating()
+            parent.willRemoveSubview(activityIndicatorView)
+        }
+        
+    }
+    
+}
+
 func showAlert (message: String, parent: UIViewController) {
     
     let alert = UIAlertController.init(title: AppModel.appName, message: message, preferredStyle: .alert)
@@ -115,20 +160,4 @@ func showAlert (message: String, parent: UIViewController) {
     
 }
 
-func showActivityIndicatory(show: Bool, parent:UIView) {
-    
-    var activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
-    
-    activityIndicatorView.alpha     = 1
-    activityIndicatorView.center    = CGPoint(x: parent.frame.width/2, y: parent.frame.height/2)
-    
-    if show {
-        activityIndicatorView.startAnimating()
-        parent.addSubview(activityIndicatorView)
-    } else {
-        activityIndicatorView.stopAnimating()
-        parent.willRemoveSubview(activityIndicatorView)
-    }
-    
-}
 
