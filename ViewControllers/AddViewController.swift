@@ -16,7 +16,11 @@ class AddViewController: UIViewController, UITextFieldDelegate {
     
     var locationText: String?
     var webText: String?
-    var studentLocation: CLLocationCoordinate2D
+    var studentLocation: CLLocationCoordinate2D?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
     
     override func viewDidLoad() {
         
@@ -42,10 +46,12 @@ class AddViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        guard let location = websiteTextField.text, location.count > 0 else {
+        guard let location = locationTextField.text,
+            location.trimmingCharacters(in: .whitespacesAndNewlines).count > 0 else {
             showAlert(message: AppModel.EnterLocation, parent: self)
             return
         }
+        
         
         Utils.shared().showActivityIndicator(show: true, parent: self.view)
         let geo = CLGeocoder()
@@ -64,17 +70,8 @@ class AddViewController: UIViewController, UITextFieldDelegate {
                 self.locationText = location
                 self.webText = url
                 Utils.shared().showActivityIndicator(show: false, parent: self.view)
-                self.performSegue(withIdentifier: <#T##String#>, sender: <#T##Any?#>)
+                //self.performSegue(withIdentifier: <#T##String#>, sender: <#T##Any?#>)
             }
-            
-//            if let place = placemark, place.count > 0 {
-//                let placeLocation: CLLocation = (place.first?.location)!
-//                self.studentLocation = placeLocation.coordinate
-//                self.locationText = location
-//                self.webText = url
-//                UIUtils.shared().showActivityIndicator(show: false, parent: self.view)
-//                self.performSegue(withIdentifier: "StudentCoordinate", sender: self)
-//            }
             
         }
         

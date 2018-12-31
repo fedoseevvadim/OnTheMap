@@ -39,13 +39,13 @@ class UdacityClient {
                 let dict = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: AnyObject]
                 if let studentsDict = dict["results"] as? [[String:AnyObject]] {
                     
-                    StudentInformation.students = [studentStruct]()
+                    StudentStruct.students = [StudentInformation]()
                     
                     for student in studentsDict {
-                        if let studentStruct = studentStruct (data: student) {
-                            StudentInformation.students?.append(studentStruct)
+                        if let studentStruct = StudentInformation (fromData: student) {
+                            StudentStruct.students?.append(studentStruct)
                         }
-  
+                        
                     }
                     
                     DispatchQueue.main.async {

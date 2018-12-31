@@ -29,19 +29,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     @IBAction func refreshAction(_ sender: Any) {
         
-        Utils.shared().showActivityIndicator(show: true, parent: self.view)
-        enableButtons(false)
-        UdacityClient.sharedInstance().getStudentsLocation() { (error) in
-            
-            guard error == nil else {
-                showAlert(message: "Error", parent: self)
-                return
-            }
-            self.addPin()
-            Utils.shared().showActivityIndicator(show: false, parent: self.view)
-            self.enableButtons(true)
-            
-        }
+       getStudentsData()
+        
     }
     
     @IBAction func logoutAction(_ sender: Any) {
@@ -63,47 +52,34 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         super.viewWillAppear(true)
         
-        Utils.shared().showActivityIndicator(show: true, parent: self.view)
+        //Utils.shared().showActivityIndicator(show: true, parent: self.view)
         //self.enableButtons(false)
         
     }
     
     func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool) {
         
-        Utils.shared().showActivityIndicator(show: false, parent: self.view)
-        self.enableButtons(true)
+        Utils.shared().showActivityIndicator(show: false, parent: view)
+        //self.enableButtons(true)
         
     }
 
-//    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
-//
-//        //Utils.shared().showActivityIndicator(show: false, parent: self.vie)
+    func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
+
+        Utils.shared().showActivityIndicator(show: false, parent: view)
 //        //self.enableButtons(true)
-//
-//    }
+
+    }
     
     func mapViewWillStartRenderingMap(_ mapView: MKMapView) {
         
-        Utils.shared().showActivityIndicator(show: true, parent: self.view)
-        self.enableButtons(false)
-        
-        UdacityClient.sharedInstance().getStudentsLocation() { ( error ) in
-
-            guard error == nil else {
-                showAlert(message: "Error", parent: self)
-                return
-            }
-
-            self.addPin()
-            //Utils.shared().showActivityIndicator(show: false, parent: self.view)
-            //self.enableButtons(true)
-        }
+        getStudentsData()
 
     }
     
     func addPin () {
         
-        guard let students = StudentInformation.students else {
+        guard let students = StudentStruct.students else {
             return
         }
         
@@ -136,7 +112,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView!.canShowCallout = true
             pinView!.pinTintColor = .red
-            //pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+            pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         }
         else {
             pinView!.annotation = annotation
@@ -159,6 +135,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
     }
 
+    // MARK - additional functions
     func enableButtons (_ enable: Bool) {
         
         //mapView.alpha = CGFloat(0.2)
@@ -169,5 +146,25 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
     }
 
+    func getStudentsData () {
+        
+        Utils.shared().showActivityIndicator(show: true, parent: view)
+        self.enableButtons(false)
+        
+        UdacityClient.sharedInstance().getStudentsLocation() { ( error ) in
+            
+            guard error == nil else {
+                showAlert(message: "Error", parent: self)
+                return
+            }
+            
+            self.addPin()
+            Utils.shared().showActivityIndicator(show: false, parent: self.view)
+            self.enableButtons(true)
+        }
+        
+    }
+    
+    
     
 }

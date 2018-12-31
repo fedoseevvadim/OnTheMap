@@ -31,7 +31,7 @@ struct AppModel {
     
     struct udacity {
         
-        static let apiPath   = "https://www.udacity.com/api/session"
+        static let apiPath   = "https://onthemap-api.udacity.com/v1/session"
         static let username  = "username"
         static let password  = "password"
         static let udacity   = "udacity"
@@ -52,12 +52,12 @@ struct AppModel {
 // example of JSON data
 // ["latitude": 37.386052, "createdAt": 2018-10-31T13:55:31.328Z, "longitude": -122.083851, "firstName": John, "mediaURL": https://udacity.com, "updatedAt": 2018-10-31T13:55:31.328Z, "mapString": Mountain View, CA, "lastName": Doe, "objectId": 8HKXdPJ5Ia, "uniqueKey": 1234]
 
-struct StudentInformation {
-    static var students: [studentStruct]?
-    static var loggedInStudent: studentStruct?
+struct StudentStruct {
+    static var students: [StudentInformation]?
+    static var loggedInStudent: StudentInformation?
 }
 
-struct studentStruct {
+struct StudentInformation {
     
     var firstName:  String = ""
     var lastName:   String = ""
@@ -71,29 +71,29 @@ struct studentStruct {
     var objectId:   String = ""
     var uniqueKey:  String = ""
     
-    init?(data: [String:AnyObject])  {
-        
-        guard data["firstName"] != nil else {
+    init?(fromData: [String:AnyObject])  {
+
+        guard fromData["firstName"] != nil else {
             return nil
         }
-        
-        guard data["lastName"] != nil else {
+
+        guard fromData["lastName"] != nil else {
             return nil
         }
-        
-        guard data["latitude"] != nil else {
+
+        guard fromData["latitude"] != nil else {
             return nil
         }
-        
-        guard data["longitude"] != nil else {
+
+        guard fromData["longitude"] != nil else {
             return nil
         }
-        
-        guard data["mediaURL"] != nil else {
+
+        guard fromData["mediaURL"] != nil else {
             return nil
         }
-        
-        self.init(data)
+
+        self.init(fromData)
     }
     
     init(_ data: [String:AnyObject]) {
@@ -110,8 +110,7 @@ struct studentStruct {
             self.mediaURL = mediaURL as! String
         }
         
-        if let latitude  = data["latitude"], let longitude = data["longitude"]
-        {
+        if let latitude  = data["latitude"], let longitude = data["longitude"] {
             self.coordinate = CLLocationCoordinate2D(latitude: latitude as! CLLocationDegrees, longitude: longitude as! CLLocationDegrees)
         }
         

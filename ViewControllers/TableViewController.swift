@@ -6,6 +6,7 @@
 //  Copyright © 2018 Vadim. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
 class TableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -64,8 +65,17 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     //MARK: TableView functions
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        guard let students = StudentInformation.students else {
+
+        guard let students = StudentStruct.students else {
+
+            let noDataLabel: UILabel     = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+            noDataLabel.text          = "No data available"
+            noDataLabel.textColor     = UIColor.black
+            noDataLabel.textAlignment = .center
+            
+            tableView.separatorStyle = .none
+            //tableView.backgroundView?.isHidden = true
+            tableView.backgroundView? = noDataLabel
             return 0
         }
         
@@ -75,9 +85,13 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "StudentCell")!
+        var cell = tableView.dequeueReusableCell(withIdentifier: "StudentCell")!
         
-        guard let students = StudentInformation.students else {
+//        if cell == nil {
+//            cell = UITableViewCell(style: .subtitle, reuseIdentifier: "StudentCell")
+//        }
+        
+        guard let students = StudentStruct.students else {
             return cell
         }
         
@@ -86,7 +100,29 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         cell.detailTextLabel?.text = student.mediaURL
         cell.imageView?.image = UIImage(named: "pin")
         
+        print(student)
+        
         return cell
+        
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        guard let students = StudentStruct.students else {
+            return
+        }
+        
+        let mediaUrl = students[indexPath.row].mediaURL
+        
+        guard let url = URL(string: mediaUrl) else {
+            return
+        }
+        
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+            showAlert(message: "URL cannot be opened", parent: self)
+        }
         
     }
 }
