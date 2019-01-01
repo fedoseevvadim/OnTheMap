@@ -36,7 +36,6 @@ class LoginViewController: UIViewController {
         passwordField.text      = ""
         loginButton.isEnabled   = true
         
-        
     }
     
     @IBAction func loginButtonPressed(_ sender: Any) {

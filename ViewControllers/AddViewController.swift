@@ -70,7 +70,8 @@ class AddViewController: UIViewController, UITextFieldDelegate {
                 self.locationText = location
                 self.webText = url
                 Utils.shared().showActivityIndicator(show: false, parent: self.view)
-                //self.performSegue(withIdentifier: <#T##String#>, sender: <#T##Any?#>)
+                self.performSegue(withIdentifier: "StudentCoordinate", sender: self)
+                
             }
             
         }

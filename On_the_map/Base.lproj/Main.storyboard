@@ -111,7 +111,7 @@
                                 </state>
                                 <connections>
                                     <action selector="clickOnFindLocation:" destination="E0o-b3-MDS" eventType="touchUpInside" id="7PR-je-dV9"/>
-                                    <segue destination="Aqy-IX-thQ" kind="show" id="90B-4C-3kO"/>
+                                    <segue destination="Aqy-IX-thQ" kind="show" identifier="StudentCoordinate" id="90B-4C-3kO"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter a location" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bMI-Ys-9Yu">
@@ -174,7 +174,11 @@
                                 <rect key="frame" x="0.0" y="36" width="375" height="44"/>
                                 <items>
                                     <navigationItem title="Add Location" id="bx3-CU-Bxe">
-                                        <barButtonItem key="leftBarButtonItem" title="Add Location" image="back_arrow" id="0Wa-K9-4Wr" userLabel="Add Location"/>
+                                        <barButtonItem key="leftBarButtonItem" title="Back" image="back_arrow" id="0Wa-K9-4Wr" userLabel="Add Location">
+                                            <connections>
+                                                <action selector="clickOnBack:" destination="Aqy-IX-thQ" id="LmO-bU-EAR"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>

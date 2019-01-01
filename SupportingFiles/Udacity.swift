@@ -21,8 +21,8 @@ class UdacityClient {
     func getStudentsLocation (completion: @escaping (_ error: String?) ->Void) {
         
         var request = URLRequest(url: URL(string: AppModel.udacityStudentLocation)!)
-        request.addValue(AppModel.udacityAppID, forHTTPHeaderField: "X-Parse-Application-Id")
-        request.addValue(AppModel.udacityAPIKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
+        request.addValue(AppModel.udacityAppID, forHTTPHeaderField: AppModel.XParseApplication)
+        request.addValue(AppModel.udacityAPIKey, forHTTPHeaderField: AppModel.XParseREST)
         let session = URLSession.shared
         let task = session.dataTask(with: request) { data, response, error in
             guard (error == nil) else {
@@ -60,6 +60,54 @@ class UdacityClient {
         task.resume()
         
     }
+    
+    func postStudentData(_ current: StudentInformation, completionHandler: @escaping (_ result: Data?, _ error: String? )->Void) {
+        
+        var request = URLRequest(url: URL(string: AppModel.udacityStudentLocation)!)
+        
+        request.httpMethod = "POST"
+        request.addValue(AppModel.udacityAPIKey, forHTTPHeaderField: AppModel.XParseREST)
+        request.addValue(AppModel.udacityAppID, forHTTPHeaderField: AppModel.XParseApplication)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        var dict = [String : AnyObject] ()
+        dict["userId"]      = current.userId    as AnyObject
+        dict["lastName"]    = current.lastName  as AnyObject
+        dict["firstName"]   = current.firstName as AnyObject
+        dict["mediaURL"]    = current.mediaURL  as AnyObject
+        dict["latitude"]    = current.latitude  as AnyObject
+        dict["longitude"]   = current.longitude as AnyObject
+        
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted)
+            request.httpBody = jsonData
+        } catch {}
+
+        let session = URLSession.shared
+        let task = session.dataTask(with: request as URLRequest) { data, response, error in
+            
+            guard (error == nil) else {
+                completionHandler(nil, AppModel.error.errorPost)
+                return
+            }
+            
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
+                completionHandler(nil, AppModel.error.errorCode)
+                return
+            }
+            
+            guard let data = data else
+            {
+                completionHandler(nil, AppModel.error.errorPostData)
+                return
+            }
+
+            completionHandler(data,nil)
+        }
+        
+        task.resume()
+    }
+    
     
     func logOut (completion: @escaping (_ result: Data?, _ error: String?) -> Void) {
         

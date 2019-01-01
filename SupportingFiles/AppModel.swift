@@ -28,6 +28,8 @@ struct AppModel {
     static let errorUnknownErrorWithStudentLoc  = "Unknown error while fetching student locations"
     static let EnterValidURL                    = "Please enter valid website url"
     static let EnterLocation                    = "Please enter location text."
+    static let XParseApplication                = "X-Parse-Application-Id"
+    static let XParseREST                       = "X-Parse-REST-API-Key"
     
     struct udacity {
         
@@ -47,6 +49,14 @@ struct AppModel {
         
     }
     
+    struct error {
+        static let errorPost            = "Error while posting student"
+        static let errorPostData        = "Could not post student data"
+        static let errorCode            = "Post student request returned a status code other than 2xx!"
+        static let noResultsWhilePost   = "No results while posting data"
+        static let errorWhilePosting    = "Error while parsing post result"
+    }
+    
 }
 
 // example of JSON data
@@ -59,17 +69,19 @@ struct StudentStruct {
 
 struct StudentInformation {
     
+    var userId:     String = ""
     var firstName:  String = ""
     var lastName:   String = ""
     var latitude:   String = ""
     var coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
-    //var longitude:  String = ""
+    var longitude:  String = ""
     var mediaURL:   String = ""
     var createdAt:  String = ""
     var updatedAt:  String = ""
     var mapString:  String = ""
     var objectId:   String = ""
     var uniqueKey:  String = ""
+    var isPosted: Bool = false
     
     init?(fromData: [String:AnyObject])  {
 
@@ -116,7 +128,6 @@ struct StudentInformation {
         
     }
 
-    
 }
 
 

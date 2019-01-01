@@ -23,6 +23,39 @@ class AddStudentLocationViewController: UIViewController {
             return
         }
 
+        current.mediaURL = webText ?? ""
+        current.mapString = locationText ?? ""
+        current.coordinate = StudentLocation!
+        
+        if !current.isPosted {
+            
+            UdacityClient.sharedInstance().postStudentData(current) { (result, error) in
+                guard error == nil else {
+                    
+                    showAlert(message: error!, parent: self)
+                    
+                    return
+                }
+                guard let result = result else {
+                    showAlert(message: AppModel.error.noResultsWhilePost, parent: self)
+                    return
+                }
+                do {
+                    let resultDict = try JSONSerialization.jsonObject(with: result, options: .allowFragments) as! [String: AnyObject]
+                    current.objectId = resultDict["objectId"] as! String
+                    current.isPosted = true
+                    self.dismiss(animated: true, completion: nil)
+                } catch {
+                    showAlert(message: AppModel.error.errorWhilePosting, parent: self)
+                }
+            }
+        } 
+    }
+    
+    @IBAction func clickOnBack(_ sender: Any) {
+        
+         dismiss(animated: true, completion: nil)
+        
     }
     
     override func viewDidLoad() {
@@ -50,7 +83,5 @@ class AddStudentLocationViewController: UIViewController {
         Utils.shared().showActivityIndicator(show: true, parent: view)
         
     }
-    
-    
     
 }
