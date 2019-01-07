@@ -52,22 +52,17 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         super.viewWillAppear(true)
         
-        //Utils.shared().showActivityIndicator(show: true, parent: self.view)
-        //self.enableButtons(false)
-        
     }
     
     func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool) {
         
-        Utils.shared().showActivityIndicator(show: false, parent: view)
-        //self.enableButtons(true)
+        //Utils.shared().showActivityIndicator(show: false, parent: view)
         
     }
 
     func mapViewDidFinishLoadingMap(_ mapView: MKMapView) {
 
-        Utils.shared().showActivityIndicator(show: false, parent: view)
-//        //self.enableButtons(true)
+        //Utils.shared().showActivityIndicator(show: false, parent: view)
 
     }
     
@@ -129,7 +124,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         if control == view.rightCalloutAccessoryView {
             let app = UIApplication.shared
             if let toOpen = view.annotation?.subtitle! {
-                app.open(URL(string: toOpen)!)
+                if ( toOpen.count > 0 ) {
+                    app.open(URL(string: toOpen)!)
+                }
             }
         }
         
@@ -148,8 +145,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
     func getStudentsData () {
         
-        Utils.shared().showActivityIndicator(show: true, parent: view)
-        self.enableButtons(false)
+        //Utils.shared().showActivityIndicator(show: true, parent: view)
         
         UdacityClient.sharedInstance().getStudentsLocation() { ( error ) in
             
@@ -159,8 +155,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             }
             
             self.addPin()
-            Utils.shared().showActivityIndicator(show: false, parent: self.view)
-            self.enableButtons(true)
+            //Utils.shared().showActivityIndicator(show: false, parent: self.view)
         }
         
     }

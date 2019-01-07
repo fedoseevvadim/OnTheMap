@@ -29,7 +29,7 @@
         <!--Map View Controller-->
         <scene sceneID="OP8-Za-kP5">
             <objects>
-                <viewController id="K6o-AS-RkD" customClass="MapViewController" customModule="On_the_map" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mapController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="K6o-AS-RkD" customClass="MapViewController" customModule="On_the_map" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ibs-ua-aCc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -110,8 +110,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="clickOnFindLocation:" destination="E0o-b3-MDS" eventType="touchUpInside" id="7PR-je-dV9"/>
-                                    <segue destination="Aqy-IX-thQ" kind="show" identifier="StudentCoordinate" id="90B-4C-3kO"/>
+                                    <action selector="clickOnFindLocation:" destination="E0o-b3-MDS" eventType="touchUpInside" id="AI0-gv-55r"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter a location" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bMI-Ys-9Yu">
@@ -151,8 +150,10 @@
                         <viewLayoutGuide key="safeArea" id="4xW-sV-J7k"/>
                     </view>
                     <connections>
+                        <outlet property="buttonFinish" destination="L1c-Tt-LNb" id="gjp-au-OQk"/>
                         <outlet property="locationTextField" destination="bMI-Ys-9Yu" id="PQL-wJ-ryu"/>
                         <outlet property="websiteTextField" destination="kB2-hc-oK0" id="bAl-QY-2mr"/>
+                        <segue destination="Aqy-IX-thQ" kind="show" identifier="StudentCoordinate" id="iUx-d1-Krz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tvk-9L-pFy" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -211,7 +212,7 @@
                         <viewLayoutGuide key="safeArea" id="vat-AQ-3vM"/>
                     </view>
                     <connections>
-                        <outletCollection property="mapView" destination="B5P-Ac-FUK" collectionClass="NSMutableArray" id="wV2-hV-Y0H"/>
+                        <outlet property="mapView" destination="B5P-Ac-FUK" id="w2R-sF-zj3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yWb-hf-VB5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -323,7 +324,7 @@
         <!--Table View Controller-->
         <scene sceneID="Ucu-RF-psv">
             <objects>
-                <viewController id="tqh-t0-SoH" customClass="TableViewController" customModule="On_the_map" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="table" id="tqh-t0-SoH" customClass="TableViewController" customModule="On_the_map" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AhK-OU-sw1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -429,6 +430,6 @@
         <image name="world" width="52" height="67"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Efb-Xj-aW5"/>
+        <segue reference="DzA-k3-AtT"/>
     </inferredMetricsTieBreakers>
 </document>

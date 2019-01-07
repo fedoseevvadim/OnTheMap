@@ -18,7 +18,43 @@ class UdacityClient {
         return Singleton.sharedInstance
     }
     
+    func getStudentData(_ userId: String, completion: @escaping (_ result: Data?, _ error: String?) -> Void) {
+        
+        var studentApiPath = AppModel.udacity.apiPathUsers
+        studentApiPath.append(userId)
+        let request = URLRequest(url: URL(string: studentApiPath)!)
+        let studentTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            
+            guard error == nil else {
+                completion(nil, "Error with the student request: \(error?.localizedDescription ?? " ")")
+                return
+            }
+            
+//            guard let status = (response as? HTTPURLResponse)?.statusCode,
+//                status >= 200 && status <= 299 else {
+//                    completion(nil, "Student Request status code is bad")
+//                    return
+//            }
+            
+            guard let data = data else {
+                completion(nil, "Student Request returned no data")
+                return
+            }
+            
+            let range = (5..<data.count)
+            let subData = data.subdata(in: range)
+            completion(subData, nil)
+   
+        }
+        
+        studentTask.resume()
+        
+    }
+    
     func getStudentsLocation (completion: @escaping (_ error: String?) ->Void) {
+        
+        var urlString: String = AppModel.udacityStudentLocation
+        urlString.append("?limit=100&order=-updatedAt")
         
         var request = URLRequest(url: URL(string: AppModel.udacityStudentLocation)!)
         request.addValue(AppModel.udacityAppID, forHTTPHeaderField: AppModel.XParseApplication)
@@ -71,12 +107,12 @@ class UdacityClient {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
         var dict = [String : AnyObject] ()
-        dict["userId"]      = current.userId    as AnyObject
-        dict["lastName"]    = current.lastName  as AnyObject
-        dict["firstName"]   = current.firstName as AnyObject
-        dict["mediaURL"]    = current.mediaURL  as AnyObject
-        dict["latitude"]    = current.latitude  as AnyObject
-        dict["longitude"]   = current.longitude as AnyObject
+        dict["userId"]      = current.userId                as AnyObject
+        dict["lastName"]    = current.lastName              as AnyObject
+        dict["firstName"]   = current.firstName             as AnyObject
+        dict["mediaURL"]    = current.mediaURL              as AnyObject
+        dict["latitude"]    = current.coordinate.latitude   as AnyObject
+        dict["longitude"]   = current.coordinate.longitude  as AnyObject
         
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted)
@@ -91,10 +127,10 @@ class UdacityClient {
                 return
             }
             
-            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                completionHandler(nil, AppModel.error.errorCode)
-                return
-            }
+//            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
+//                completionHandler(nil, AppModel.error.errorCode)
+//                return
+//            }
             
             guard let data = data else
             {
@@ -111,7 +147,7 @@ class UdacityClient {
     
     func logOut (completion: @escaping (_ result: Data?, _ error: String?) -> Void) {
         
-        var request = URLRequest(url: URL(string: AppModel.udacity.apiPath)!)
+        var request = URLRequest(url: URL(string: AppModel.udacity.apiPathSession)!)
         request.httpMethod = "DELETE"
         var xsrfCookie: HTTPCookie? = nil
         let sharedCookieStorage = HTTPCookieStorage.shared
@@ -149,7 +185,7 @@ class UdacityClient {
     
     func login (email: String, password: String, completion: @escaping (_ result: Data?, _ error: String?) -> Void ) {
         
-        let request             = NSMutableURLRequest(url: URL(string: AppModel.udacity.apiPath)!)
+        let request             = NSMutableURLRequest(url: URL(string: AppModel.udacity.apiPathSession)!)
         let fieldsDictionary    = NSMutableDictionary()
         let udacityDictionary   = NSMutableDictionary()
         
@@ -184,9 +220,14 @@ class UdacityClient {
             }
             
             guard let status = (response as? HTTPURLResponse)?.statusCode,
-                status >= 200 && status <= 299 else {
-                    completion(nil, AppModel.loginStatus)
-                    return
+                status != 403 else {
+                completion(nil, AppModel.userOrPassIncorrect)
+                return
+            }
+            
+            guard status >= 200 && status <= 299 else {
+                completion(nil, AppModel.loginStatus)
+                return
             }
             
             guard let data = data else {

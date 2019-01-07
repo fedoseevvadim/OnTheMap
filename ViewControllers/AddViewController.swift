@@ -13,6 +13,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var websiteTextField: UITextField!
+    @IBOutlet weak var buttonFinish: UIButton!
     
     var locationText: String?
     var webText: String?
@@ -53,12 +54,12 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         }
         
         
-        Utils.shared().showActivityIndicator(show: true, parent: self.view)
+        //Utils.shared().showActivityIndicator(show: true, parent: self.view)
         let geo = CLGeocoder()
         geo.geocodeAddressString(location) { (addressString, error) in
             
             guard error == nil else {
-                Utils.shared().showActivityIndicator(show: false, parent: self.view)
+                //Utils.shared().showActivityIndicator(show: false, parent: self.view)
                 showAlert(message: "Error getting location information", parent: self)
                 return
             }
@@ -69,7 +70,7 @@ class AddViewController: UIViewController, UITextFieldDelegate {
                 self.studentLocation = placeLocation.coordinate
                 self.locationText = location
                 self.webText = url
-                Utils.shared().showActivityIndicator(show: false, parent: self.view)
+                //Utils.shared().showActivityIndicator(show: false, parent: self.view)
                 self.performSegue(withIdentifier: "StudentCoordinate", sender: self)
                 
             }
@@ -77,7 +78,19 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         }
         
     }
-    
+
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+        if segue.identifier == "StudentCoordinate" {
+
+            let controller = segue.destination as! AddStudentLocationViewController
+            controller.locationText = locationText
+            controller.webText = webText
+            controller.locationOfStudent = studentLocation
+            //controller.studentID =
+        }
+    }
     
     func isValidUrl (_ urlString: String )->Bool {
         
@@ -85,14 +98,5 @@ class AddViewController: UIViewController, UITextFieldDelegate {
         let predicate = NSPredicate(format: "SELF MATCHES %@", urlRegEx)
         return predicate.evaluate(with: urlString)
         
-//        let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
-//        if let match = detector.firstMatch(in: self, options: [], range: NSRange(location: 0, length: self.endIndex.encodedOffset)) {
-//            // it is a link, if the match covers the whole string
-//            return match.range.length == self.endIndex.encodedOffset
-//        } else {
-//            return false
-//        }
     }
-    
-    
 }

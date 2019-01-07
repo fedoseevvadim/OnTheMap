@@ -30,10 +30,13 @@ struct AppModel {
     static let EnterLocation                    = "Please enter location text."
     static let XParseApplication                = "X-Parse-Application-Id"
     static let XParseREST                       = "X-Parse-REST-API-Key"
+    static let userOrPassIncorrect              = "Username or password is incorrect"
+    
     
     struct udacity {
         
-        static let apiPath   = "https://onthemap-api.udacity.com/v1/session"
+        static let apiPathSession   = "https://onthemap-api.udacity.com/v1/session"
+        static let apiPathUsers     = "https://onthemap-api.udacity.com/v1/users/"
         static let username  = "username"
         static let password  = "password"
         static let udacity   = "udacity"
@@ -50,11 +53,18 @@ struct AppModel {
     }
     
     struct error {
-        static let errorPost            = "Error while posting student"
-        static let errorPostData        = "Could not post student data"
-        static let errorCode            = "Post student request returned a status code other than 2xx!"
-        static let noResultsWhilePost   = "No results while posting data"
-        static let errorWhilePosting    = "Error while parsing post result"
+        static let errorPost                        = "Error while posting student"
+        static let errorPostData                    = "Could not post student data"
+        static let errorCode                        = "Post student request returned a status code other than 2xx!"
+        static let noResultsWhilePost               = "No results while posting data"
+        static let errorWhilePosting                = "Error while parsing post result"
+        static let errorWithRequest                 = "Error with the request"
+        static let resultIsNil                      = "Result is nil from Udacity"
+        static let jsonSerializationFailed          = "Json serialization failed"
+        static let jsonSerializationFailedStudent   = "Json serialization failed while getting student detail info"
+        static let userIdIsMissing                  = "User ID missing during login"
+        static let accountIDisMissing               = "Account is missing in login"
+        static let errorReturnStudentDetails        = "Error returned from Student details"
     }
     
 }
@@ -62,7 +72,7 @@ struct AppModel {
 // example of JSON data
 // ["latitude": 37.386052, "createdAt": 2018-10-31T13:55:31.328Z, "longitude": -122.083851, "firstName": John, "mediaURL": https://udacity.com, "updatedAt": 2018-10-31T13:55:31.328Z, "mapString": Mountain View, CA, "lastName": Doe, "objectId": 8HKXdPJ5Ia, "uniqueKey": 1234]
 
-struct StudentStruct {
+class StudentStruct {
     static var students: [StudentInformation]?
     static var loggedInStudent: StudentInformation?
 }
